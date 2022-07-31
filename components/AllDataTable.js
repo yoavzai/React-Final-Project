@@ -38,7 +38,7 @@ export default function AllDataTable(props) {
                     purchasesDates: purchasesDates}
             })
         setRows(TempRows)
-    }, [costumers, purchases])
+    }, [costumers, products])
                     
 
     return (
