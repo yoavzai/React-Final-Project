@@ -53,8 +53,19 @@ function PurchasesComp() {
         setTable(<AllDataTable costumers={tableCostumers}
                                  products={tableProducts}
                                  purchases={tablePurchases}
-                                 isBuyProductsColumn={false}>
+                                 pageRequesting="purchases">
                 </AllDataTable>)
+    }
+
+    function clearSearch() {
+        products.forEach(product => document.getElementById(product.id).checked = false)
+        costumers.forEach(costumer => document.getElementById(costumer.id).checked = false)
+        document.getElementById("searchDayInput").value = ""
+        document.getElementById("searchMonthInput").value = ""
+        document.getElementById("searchYearInput").value = ""
+        setCheckedCostumersIds([])
+        setCheckedProductsIds([])
+        setDate({day:"" , month:"", year:""})
     }
 
     return (
@@ -64,7 +75,7 @@ function PurchasesComp() {
             <div className="container_costumers">
                 <div>  
                     <fieldset className="purchases_page_combobox">
-                        <legend>Choose wanted products:</legend>
+                        <legend>Choose wanted products: (no checks = all)</legend>
                             <div>
                                 {products.map(product => {
                                     return (
@@ -80,7 +91,7 @@ function PurchasesComp() {
                             </div>
                     </fieldset>
                     <fieldset className="purchases_page_combobox">
-                        <legend>Choose wanted costumers:</legend>
+                        <legend>Choose wanted costumers: (no checks = all)</legend>
                             <div>
                                 {costumers.map(costumer => {
                                     return (
@@ -96,25 +107,30 @@ function PurchasesComp() {
                             </div>
                     </fieldset>
                     <fieldset className="purchases_page_combobox">
-                        <legend>Choose wanted date:</legend>
+                        <legend>Choose wanted date: (empty field = all)</legend>
                             <div>
                                 <div>
                                     <span>Day (1 - 31) </span>
-                                    <input type="text" onChange={(e) => setDate({...date, day: e.target.value})}></input>
+                                    <input id="searchDayInput" type="text" onChange={(e) => setDate({...date, day: e.target.value})}></input>
                                 </div>
                                 <div>
                                     <span>Month (1 - 12) </span>
-                                    <input type="text" onChange={(e) => setDate({...date, month: e.target.value})}></input>
+                                    <input  id="searchMonthInput" type="text" onChange={(e) => setDate({...date, month: e.target.value})}></input>
                                 </div>
                                 <div>
                                     <span>Year </span>
-                                    <input type="text" onChange={(e) => setDate({...date, year: e.target.value})}></input>
+                                    <input  id="searchYearInput" type="text" onChange={(e) => setDate({...date, year: e.target.value})}></input>
                                 </div>
                             </div>
                     </fieldset>
                 </div>
-                <div>
-                    <button onClick={buildTable}>Search</button>
+                <div className="purchases_search_menu">
+                    <div>
+                        <button onClick={buildTable}>Search</button>
+                    </div>
+                    <div>
+                        <button onClick={clearSearch}>Clear Search</button>
+                    </div>
                 </div>
                 {table}
             </div>

@@ -65,7 +65,7 @@ export default function CostumersComp() {
                 <AllDataTable costumers={costumers}
                                 products={products}
                                 purchases={purchases}
-                                isBuyProductsColumn={true}>
+                                pageRequesting="costumers">
                 </AllDataTable>
             </div>
         </div>

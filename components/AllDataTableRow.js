@@ -34,7 +34,7 @@ export default function AllDataTableRow (props) {
                     )
                 })}    
             </td>
-            {props.isBuyProductsColumn && 
+            {props.pageRequesting == "costumers" && 
             <td>
                 <button onClick={() => setIsBuyProduct(!isBuyProduct)}>Buy products</button>
                 {isBuyProduct && <BuyProductComp

@@ -12,7 +12,7 @@ export default function AllDataTable(props) {
     const [rows, setRows] = useState([])
 
     useEffect(() => {
-        const TempRows = costumers.map(costumer => {
+        let TempRows = costumers.map(costumer => {
             const costumerId = costumer.id
             const costumerName = costumer.fname + ' ' + costumer.lname
             const costumerPurchasesSortedByDate = 
@@ -37,19 +37,27 @@ export default function AllDataTable(props) {
                     purchasedProducts: purchasedProducts,
                     purchasesDates: purchasesDates}
             })
+        if (props.pageRequesting === "purchases") {
+            TempRows = TempRows.filter(row => row.purchasedProducts.length !== 0)
+        }
         setRows(TempRows)
-    }, [costumers, products])
+    }, [costumers, products, purchases])
                     
 
     return (
         <div className="costumers_table">
+            {rows.length === 0 && props.pageRequesting === "purchases" ?
+            <div>
+                <h2>No Results</h2>
+            </div>
+            :
             <table>
                 <thead>
                     <tr>
                         <th>Name</th>
                         <th>Purchased Products</th>
                         <th>Purchase Date</th>
-                        {props.isBuyProductsColumn &&
+                        {props.pageRequesting == "costumers" &&
                         <th>Buy More Products</th>
                         }
                     </tr>
@@ -58,10 +66,11 @@ export default function AllDataTable(props) {
                     {rows.map((row, index) => {
                         return <AllDataTableRow key={index}
                                                   row={row}
-                                                  isBuyProductsColumn={props.isBuyProductsColumn}>
+                                                  pageRequesting={props.pageRequesting}>
                                </AllDataTableRow>
                     })}
                 </tbody>
             </table>
+            }
         </div>)
 }
