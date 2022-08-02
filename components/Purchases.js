@@ -13,6 +13,7 @@ function PurchasesComp() {
     const [checkedCostumersIds, setCheckedCostumersIds] = useState([])
     const [date, setDate] = useState({day:"" , month:"", year:""})
     const [table, setTable] = useState(null)
+    const [isTable, setIsTable] = useState(false)
 
     function productCheckedChange(e) {
         if (e.target.checked) {
@@ -55,6 +56,7 @@ function PurchasesComp() {
                                  purchases={tablePurchases}
                                  pageRequesting="purchases">
                 </AllDataTable>)
+        setIsTable(true)
     }
 
     function clearSearch() {
@@ -66,6 +68,7 @@ function PurchasesComp() {
         setCheckedCostumersIds([])
         setCheckedProductsIds([])
         setDate({day:"" , month:"", year:""})
+        setIsTable(false)
     }
 
     return (
@@ -132,7 +135,7 @@ function PurchasesComp() {
                         <button onClick={clearSearch}>Clear Search</button>
                     </div>
                 </div>
-                {table}
+                {isTable && table}
             </div>
         </div>
     )
